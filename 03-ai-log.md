@@ -23,9 +23,7 @@
 | 1 | Các con số (14 phút/lượt, 3.000 yêu cầu/ngày, 400 giờ công) là **ước lượng của AI**, không có nguồn từ Vingroup. Nếu nộp như sự thật thì đó là hallucination. | Đánh dấu rõ *(GĐ)* = giả định trong mọi file và đặt "xác minh bằng log thật" thành điều kiện của quyết định GO. |
 | 2 | Chi tiết chương trình VPoint thật (tên hạng, tỉ lệ quy đổi, điều kiện) AI có thể nhớ sai hoặc đã lỗi thời. | Prototype chỉ dùng dữ liệu **MOCK**, ghi chú rõ trong code. Không đưa chi tiết chính sách thật vào bài. |
 | 3 | Ví dụ mẫu (Xanh SM + pin < 5%) khác đề tài của tôi, nên check của starter code không dùng được nguyên xi. | Viết lại ranh giới (Rule 1–3) và các đoạn kiểm tra theo bài toán VPoint, giữ nguyên khung của starter code. |
-**Bổ sung phần quan trọng nhất sau khi chạy Gemini thật:**
-- Gemini có phá ranh giới nào không? Test nào FAIL? Dán đoạn output sai: Không có
-- Lỗi định dạng (ví dụ: bọc JSON trong ```json, thêm lời dẫn trước thẻ `[DRAFT_ONLY]`)? `...`)
+
 
 ## 3. Tôi đã sửa prompt / ranh giới như thế nào
 

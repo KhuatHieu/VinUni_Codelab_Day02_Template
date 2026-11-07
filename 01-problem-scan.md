@@ -35,7 +35,7 @@
 │  VPoint ──> 4. Tra chính sách từng đối tác ──> 5. Soạn      │
 │  phản hồi ──> 6. Gửi + ghi ticket                           │
 │                                                             │
-│ Bước tốn nhất/lỗi nhất? Bước 4 và 5 (⏱ ~8 phút/lượt)       │
+│ Bước tốn nhất/lỗi nhất? Bước 4 và 5 ( ~8 phút/lượt)       │
 │ AI nhảy vào ở bước nào? Bước 4-5 (truy xuất chính sách +    │
 │ soạn NHÁP phản hồi dựa trên dữ liệu tài khoản có sẵn)       │
 │                                                             │
@@ -64,7 +64,7 @@
 │  1. Khách chọn dịch vụ ──> 2. Thanh toán ──> 3. Phát hiện   │
 │  thiếu ưu đãi sau khi trả tiền ──> 4. Gọi CSKH khiếu nại    │
 │                                                             │
-│ Bước tốn nhất/lỗi nhất? Bước 3-4 (⏱ vài ngày hoàn điểm)    │
+│ Bước tốn nhất/lỗi nhất? Bước 3-4 (vài ngày hoàn điểm)    │
 │ AI nhảy vào ở bước nào? Giữa bước 1 và 2 (gợi ý ưu đãi)     │
 │                                                             │
 │ Metric: Tăng tỉ lệ giao dịch dùng đúng ưu đãi từ 40% ──>    │
@@ -92,7 +92,7 @@
 │  1. Khách gửi khiếu nại ──> 2. Nhân viên đọc và phân loại   │
 │  ──> 3. Chuyển cho đội đối tác ──> 4. Đối soát, hoàn điểm   │
 │                                                             │
-│ Bước tốn nhất/lỗi nhất? Bước 2-3 (⏱ ~6 phút/ticket; gán    │
+│ Bước tốn nhất/lỗi nhất? Bước 2-3 ( ~6 phút/ticket; gán    │
 │ sai đội làm kéo dài xử lý)                                  │
 │ AI nhảy vào ở bước nào? Bước 2 (phân loại + tóm tắt)        │
 │                                                             │
