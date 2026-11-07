@@ -5,23 +5,42 @@ Lightweight Prompt Boundary Prototyping
 Bài toán: Trợ lý thẩm định sơ bộ yêu cầu bảo hành VinFast (xem 02-deep-dive-report.md).
 Trợ lý chỉ SOẠN NHÁP cho Cố vấn dịch vụ. Con người luôn là người quyết định.
 
-Cách chạy:
-    export GEMINI_API_KEY='your_key'
+Cách chạy (chọn MỘT trong hai, không bao giờ ghi key vào code):
+    export OPENROUTER_API_KEY='your_key'   # gọi Gemini 2.5 Flash qua OpenRouter
+    export GEMINI_API_KEY='your_key'       # hoặc gọi trực tiếp bằng SDK google-genai
     python3 prompt_prototype.py
+
+Nếu có cả hai biến, OPENROUTER_API_KEY được ưu tiên.
 """
 
 import json
 import os
 import sys
 import time
+import urllib.error
+import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Callable, Optional
 
-from google import genai
+try:
+    from google import genai
+except ImportError:  # chỉ cần khi gọi trực tiếp Gemini; OpenRouter không cần SDK
+    genai = None
 
-# Standard Model Identifier (có thể ghi đè bằng biến môi trường GEMINI_MODEL
-# khi model mặc định bị quá tải).
+# Standard Model Identifier (có thể ghi đè bằng biến môi trường khi model bị quá tải).
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+# Cùng model Gemini 2.5 Flash, gọi qua OpenRouter.
+OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "google/gemini-2.5-flash")
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+
+def active_provider() -> Optional[str]:
+    """Trả về 'openrouter', 'gemini' hoặc None nếu chưa có API key nào."""
+    if os.getenv("OPENROUTER_API_KEY"):
+        return "openrouter"
+    if os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY"):
+        return "gemini"
+    return None
 
 # ===========================================================================
 # 📚 Điều khoản tham chiếu (dữ liệu mẫu)
@@ -81,33 +100,66 @@ Dòng 1 là [DRAFT_ONLY]. Từ dòng 2 trở đi là MỘT đối tượng JSON 
 """.strip()
 
 
+def _call_openrouter(user_input: str, api_key: str) -> str:
+    """Gọi Gemini 2.5 Flash qua OpenRouter (API tương thích OpenAI), chỉ dùng thư viện chuẩn."""
+    payload = {
+        "model": OPENROUTER_MODEL,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_input},
+        ],
+        "temperature": 0.2,
+        "max_tokens": 1500,
+    }
+    request = urllib.request.Request(
+        OPENROUTER_URL,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=25) as response:
+            data = json.load(response)
+    except urllib.error.HTTPError as e:
+        # Chỉ đưa mã lỗi và thân phản hồi vào thông báo, tuyệt đối không in header/key.
+        raise RuntimeError(f"OpenRouter HTTP {e.code}: {e.read().decode('utf-8', 'ignore')[:200]}") from None
+    return (data["choices"][0]["message"]["content"] or "").strip()
+
+
 def evaluate_prompt(user_input: str) -> str:
     """
     Gọi Gemini 2.5 với SYSTEM_PROMPT và user_input, trả về nguyên văn text phản hồi.
 
-    Dùng SDK 'google-genai'. Thử lại tối đa 2 lần khi dịch vụ quá tải (503/429)
-    để script vẫn chạy xong trong giới hạn thời gian của autograder.
+    - Có OPENROUTER_API_KEY: gọi qua OpenRouter.
+    - Ngược lại: dùng SDK 'google-genai' với GEMINI_API_KEY / GOOGLE_API_KEY.
+
+    Thử lại tối đa 2 lần khi dịch vụ quá tải (503/429) để script vẫn chạy xong
+    trong giới hạn thời gian của autograder.
     """
-    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    client = genai.Client(api_key=api_key)
-    config = genai.types.GenerateContentConfig(
-        system_instruction=SYSTEM_PROMPT,
-        temperature=0.2,
-        # Tắt "thinking" để phản hồi nhanh và đều; bài toán này không cần suy luận dài.
-        thinking_config=genai.types.ThinkingConfig(thinking_budget=0),
-    )
     last_error: Optional[Exception] = None
     for attempt in range(2):
         try:
+            openrouter_key = os.getenv("OPENROUTER_API_KEY")
+            if openrouter_key:
+                return _call_openrouter(user_input, openrouter_key)
+
+            # Gọi trực tiếp bằng SDK google-genai.
+            client = genai.Client(api_key=os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY"))
+            config = genai.types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                temperature=0.2,
+                # Tắt "thinking" để phản hồi nhanh và đều; bài toán này không cần suy luận dài.
+                thinking_config=genai.types.ThinkingConfig(thinking_budget=0),
+            )
             response = client.models.generate_content(
                 model=GEMINI_MODEL, contents=user_input, config=config
             )
             return (response.text or "").strip()
-        except Exception as e:  # noqa: BLE001 - SDK ném nhiều loại lỗi mạng/quota
+        except Exception as e:  # noqa: BLE001 - lỗi mạng/quota/SDK đều được thử lại
             last_error = e
             if attempt == 0:
                 time.sleep(2)
-    raise RuntimeError(f"Gemini API call failed after retries: {last_error}")
+    raise RuntimeError(f"LLM call failed after retries: {last_error}")
 
 
 # ===========================================================================
@@ -205,15 +257,15 @@ def run_test(test: dict[str, Any]) -> tuple[Optional[str], Optional[Exception]]:
 
 
 if __name__ == "__main__":
-    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-    if not api_key:
-        print("\033[91m[Error] GEMINI_API_KEY environment variable is not set.\033[0m")
-        print("Please set it in terminal before running: export GEMINI_API_KEY='your_key'")
+    provider = active_provider()
+    if provider is None:
+        print("\033[91m[Error] No API key found (OPENROUTER_API_KEY or GEMINI_API_KEY).\033[0m")
+        print("Please set one in terminal before running: export OPENROUTER_API_KEY='your_key'")
         sys.exit(1)
 
     print("\033[94m==================================================")
     print("🚀 Vin Smart Future — Programmatic Boundary Stress-Testing")
-    print(f"Standard Model: {GEMINI_MODEL}")
+    print(f"Standard Model: {OPENROUTER_MODEL if provider == 'openrouter' else GEMINI_MODEL} (via {provider})")
     print("Bài toán: Trợ lý thẩm định sơ bộ yêu cầu bảo hành VinFast")
     print("==================================================\033[0m\n")
 
