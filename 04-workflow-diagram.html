@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quy trình điều tra gian lận hiện tại</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f5f5f5;
+      --color-ink:     #2d3142;
+      --color-muted:   #4f5d75;
+      --color-accent:  #bf4520;
+      --font-sans:     'Be Vietnam Pro', system-ui, sans-serif;
+      --font-mono:     'JetBrains Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .frame { max-width: 1600px; width: 100%; }
+    .diagram-container { width: 100%; overflow-x: auto; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.35rem;
+    }
+    h1 {
+      font-family: var(--font-sans);
+      font-size: clamp(1.7rem, 2vw + 0.9rem, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.8rem;
+    }
+    svg { width: 100%; min-width: 1600px; display: block; }
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Xanh SM · Current-state workflow</p>
+    <h1>Quy trình điều tra gian lận cuốc xe</h1>
+    <div class="diagram-container">
+      <svg viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="workflow-title workflow-desc">
+        <title id="workflow-title">Quy trình điều tra gian lận hiện tại</title>
+        <desc id="workflow-desc">Năm bước điều tra cuốc xe ảo tại Xanh SM, kèm đầu vào, thao tác và đầu ra. Bước tra GPS và đối soát log là điểm nghẽn, tổng 32 phút mỗi hồ sơ.</desc>
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#4f5d75"/></marker>
+          <marker id="arrow-accent" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#bf4520"/></marker>
+          <marker id="arrow-link" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0, 10 4, 0 8" fill="#2e5aa8"/></marker>
+        </defs>
+        <rect width="1600" height="1000" fill="#f5f5f5"/>
+
+        <text x="20" y="32" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700" letter-spacing="0.06em">XANH SM (GSM) · TRUST &amp; SAFETY · VIN SMART FUTURE</text>
+        <text x="20" y="70" fill="#2d3142" font-size="36" font-family="'Be Vietnam Pro', sans-serif" font-weight="800">Quy trình điều tra gian lận cuốc xe</text>
+        <text x="20" y="98" fill="#4f5d75" font-size="18" font-family="'Be Vietnam Pro', sans-serif" font-weight="700">Phòng Kiểm soát Gian lận phối hợp Vin Smart Future · 32 phút / hồ sơ</text>
+
+        <line x1="516" y1="292" x2="548" y2="292" stroke="#4f5d75" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <line x1="1044" y1="292" x2="1076" y2="292" stroke="#4f5d75" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <line x1="1328" y1="476" x2="1328" y2="516" stroke="#bf4520" stroke-width="2" marker-end="url(#arrow-accent)"/>
+        <line x1="1076" y1="700" x2="1044" y2="700" stroke="#4f5d75" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <rect x="1340" y="484" width="108" height="22" fill="#f5f5f5"/>
+        <text x="1394" y="500" fill="#bf4520" font-size="13" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">HANDOFF</text>
+
+        <rect x="20" y="120" width="496" height="356" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1.4"/>
+        <text x="40" y="150" fill="#2d3142" font-size="15" font-family="'JetBrains Mono', monospace" font-weight="700">BƯỚC 1</text>
+        <text x="40" y="180" fill="#2d3142" font-size="18" font-family="'JetBrains Mono', monospace" font-weight="700">Rules quét và gắn cờ</text>
+        <rect x="40" y="196" width="456" height="34" rx="2" fill="rgba(45,49,66,0.06)"/>
+        <text x="52" y="218" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace">Rule Engine · tự động</text>
+        <text x="484" y="218" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="end">1 phút</text>
+        <text x="40" y="258" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU VÀO</text>
+        <text x="40" y="282" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Log cuốc xe từ server Xanh SM</text>
+        <text x="40" y="316" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">THAO TÁC</text>
+        <text x="40" y="340" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Quét luật tĩnh: cuốc ngắn &lt; 1.5km,</text>
+        <text x="40" y="362" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">tỷ lệ nhận/hủy bất thường, trùng IP.</text>
+        <text x="40" y="396" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU RA</text>
+        <text x="40" y="420" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Danh sách Flagged IDs cần kiểm tra</text>
+
+        <rect x="548" y="120" width="496" height="356" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.8"/>
+        <text x="568" y="150" fill="#bf4520" font-size="15" font-family="'JetBrains Mono', monospace" font-weight="700">BƯỚC 2</text>
+        <rect x="856" y="132" width="168" height="26" rx="2" fill="#bf4520"/>
+        <text x="940" y="150" fill="#f5f5f5" font-size="13" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">BOTTLENECK</text>
+        <text x="568" y="180" fill="#2d3142" font-size="18" font-family="'JetBrains Mono', monospace" font-weight="700">Tra telemetry và GPS</text>
+        <rect x="568" y="196" width="456" height="34" rx="2" fill="rgba(45,49,66,0.06)"/>
+        <text x="580" y="218" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace">Chuyên viên Trust &amp; Safety</text>
+        <text x="1012" y="218" fill="#bf4520" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="end">10 phút</text>
+        <text x="568" y="258" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU VÀO</text>
+        <text x="568" y="282" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Mã tài xế và biển số xe VinFast</text>
+        <text x="568" y="316" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">THAO TÁC</text>
+        <text x="568" y="340" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Mở dashboard xe, soi GPS từng giây,</text>
+        <text x="568" y="362" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">đối chiếu pin SoC với quãng đường.</text>
+        <text x="568" y="396" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU RA</text>
+        <text x="568" y="420" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Phát hiện Fake GPS / xe không chạy</text>
+
+        <rect x="1076" y="120" width="504" height="356" rx="6" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.8"/>
+        <text x="1096" y="150" fill="#bf4520" font-size="15" font-family="'JetBrains Mono', monospace" font-weight="700">BƯỚC 3</text>
+        <rect x="1392" y="132" width="168" height="26" rx="2" fill="#bf4520"/>
+        <text x="1476" y="150" fill="#f5f5f5" font-size="13" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">BOTTLENECK</text>
+        <text x="1096" y="180" fill="#2d3142" font-size="18" font-family="'JetBrains Mono', monospace" font-weight="700">Đối soát đa nguồn</text>
+        <rect x="1096" y="196" width="464" height="34" rx="2" fill="rgba(45,49,66,0.06)"/>
+        <text x="1108" y="218" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace">Chuyên viên Trust &amp; Safety</text>
+        <text x="1548" y="218" fill="#bf4520" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="end">15 phút</text>
+        <text x="1096" y="258" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU VÀO</text>
+        <text x="1096" y="282" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Log thiết bị, SIM, mã ưu đãi</text>
+        <text x="1096" y="316" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">THAO TÁC</text>
+        <text x="1096" y="340" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Tải log 4 hệ thống: tài khoản, thiết bị,</text>
+        <text x="1096" y="362" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">voucher và ví, tìm chuỗi thông đồng.</text>
+        <text x="1096" y="396" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU RA</text>
+        <text x="1096" y="420" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Bảng chứng cứ để trình phê duyệt</text>
+
+        <line x1="1328" y1="476" x2="1328" y2="516" stroke="#bf4520" stroke-width="2" marker-end="url(#arrow-accent)"/>
+
+        <rect x="20" y="524" width="496" height="400" rx="6" fill="#ffffff" stroke="#4f5d75" stroke-width="1.4"/>
+        <text x="40" y="560" fill="#2d3142" font-size="20" font-family="'Be Vietnam Pro', sans-serif" font-weight="800">Hiệu suất hiện tại</text>
+        <text x="40" y="604" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">TỔNG THỜI GIAN</text>
+        <text x="40" y="632" fill="#2d3142" font-size="20" font-family="'JetBrains Mono', monospace" font-weight="700">32 phút / hồ sơ vi phạm</text>
+        <text x="40" y="676" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐIỂM NGHẼN · BƯỚC 2 + 3</text>
+        <text x="40" y="704" fill="#bf4520" font-size="20" font-family="'JetBrains Mono', monospace" font-weight="700">25 phút</text>
+        <text x="40" y="748" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">CẢNH BÁO NHẦM</text>
+        <text x="40" y="776" fill="#2d3142" font-size="20" font-family="'JetBrains Mono', monospace" font-weight="700">18% tài xế thật bị phạt oan</text>
+        <text x="40" y="820" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">THẤT THOÁT / TỒN ĐỌNG</text>
+        <text x="40" y="848" fill="#2d3142" font-size="18" font-family="'JetBrains Mono', monospace" font-weight="700">~1.2 tỷ VNĐ / quý</text>
+        <text x="40" y="876" fill="#2d3142" font-size="18" font-family="'JetBrains Mono', monospace">~3.500 cảnh báo / tháng · 1.800h</text>
+
+        <rect x="548" y="524" width="496" height="400" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1.4"/>
+        <text x="568" y="556" fill="#2d3142" font-size="15" font-family="'JetBrains Mono', monospace" font-weight="700">BƯỚC 5</text>
+        <text x="568" y="586" fill="#2d3142" font-size="18" font-family="'JetBrains Mono', monospace" font-weight="700">Thi hành chế tài</text>
+        <rect x="568" y="604" width="456" height="34" rx="2" fill="rgba(45,49,66,0.06)"/>
+        <text x="580" y="626" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace">Admin vận hành</text>
+        <text x="1012" y="626" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="end">1 phút</text>
+        <text x="568" y="668" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU VÀO</text>
+        <text x="568" y="692" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Quyết định xử lý kỷ luật đã ký</text>
+        <text x="568" y="726" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">THAO TÁC</text>
+        <text x="568" y="750" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Khóa tài khoản trên app tài xế,</text>
+        <text x="568" y="772" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">thu thưởng gian lận, nhận khiếu nại</text>
+        <text x="568" y="794" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">nếu phạt oan.</text>
+        <text x="568" y="828" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU RA</text>
+        <text x="568" y="852" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Hồ sơ vi phạm hoàn tất</text>
+
+        <rect x="1076" y="524" width="504" height="400" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1.4"/>
+        <text x="1096" y="556" fill="#2d3142" font-size="15" font-family="'JetBrains Mono', monospace" font-weight="700">BƯỚC 4</text>
+        <rect x="1400" y="536" width="160" height="26" rx="2" fill="#2d3142"/>
+        <text x="1480" y="554" fill="#f5f5f5" font-size="13" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">HANDOFF</text>
+        <text x="1096" y="586" fill="#2d3142" font-size="18" font-family="'JetBrains Mono', monospace" font-weight="700">Soạn tờ trình, xin duyệt</text>
+        <rect x="1096" y="604" width="464" height="34" rx="2" fill="rgba(45,49,66,0.06)"/>
+        <text x="1108" y="626" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace">Lead Fraud</text>
+        <text x="1548" y="626" fill="#2d3142" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="end">5 phút</text>
+        <text x="1096" y="668" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU VÀO</text>
+        <text x="1096" y="692" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Bảng chứng cứ vi phạm</text>
+        <text x="1096" y="726" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">THAO TÁC</text>
+        <text x="1096" y="750" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Chép vào biên bản nội bộ, viết</text>
+        <text x="1096" y="772" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">lý giải và trình cấp quản lý ký.</text>
+        <text x="1096" y="828" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">ĐẦU RA</text>
+        <text x="1096" y="852" fill="#2d3142" font-size="16" font-family="'JetBrains Mono', monospace">Tờ trình được ký duyệt chế tài</text>
+
+        <line x1="20" y1="948" x2="1580" y2="948" stroke="rgba(45,49,66,0.12)" stroke-width="1"/>
+        <text x="20" y="980" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace" font-weight="700">CHÚ THÍCH</text>
+        <rect x="168" y="964" width="18" height="14" rx="2" fill="#ffffff" stroke="#2d3142" stroke-width="1.4"/>
+        <text x="194" y="976" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace">Bước</text>
+        <rect x="280" y="964" width="18" height="14" rx="2" fill="rgba(191,69,32,0.08)" stroke="#bf4520" stroke-width="1.8"/>
+        <text x="306" y="976" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace">Điểm nghẽn</text>
+        <rect x="460" y="964" width="18" height="14" rx="2" fill="#2d3142"/>
+        <text x="486" y="976" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace">Handoff</text>
+        <line x1="620" y1="972" x2="660" y2="972" stroke="#bf4520" stroke-width="2" marker-end="url(#arrow-accent)"/>
+        <text x="672" y="976" fill="#4f5d75" font-size="14" font-family="'JetBrains Mono', monospace">Chuyển Lead duyệt</text>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>
