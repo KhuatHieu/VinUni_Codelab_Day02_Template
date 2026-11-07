@@ -16,13 +16,13 @@
 
 ## 🃏 Phase 2 — QUICK-ASSESS: 3 Quick Problem Cards
 
-### Card #1 — Co-pilot CSKH VPoint (soạn nháp trả lời có dẫn chứng)
+### Card #1 — Co-pilot CSKH VinClub (soạn nháp trả lời có dẫn chứng)
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │ QUICK PROBLEM CARD #1                                       │
 │                                                             │
-│ Bài toán: Agent CSKH VPoint phải tra điểm, hạng, và chính   │
+│ Bài toán: Agent CSKH VinClub phải tra điểm, hạng, và chính   │
 │ sách của nhiều công ty thành viên rồi tự soạn câu trả lời.  │
 │ Công ty thành viên: [x] Khác: VPoint (liên thông toàn hệ    │
 │   sinh thái: VinFast, Vinmec, Vinpearl, Xanh SM, Vinschool) │
@@ -32,7 +32,7 @@
 │                                                             │
 │ Workflow thủ công hiện tại (6 bước):                        │
 │  1. Nhận yêu cầu ──> 2. Xác minh khách ──> 3. Tra tài khoản │
-│  VPoint ──> 4. Tra chính sách từng đối tác ──> 5. Soạn      │
+│  VinClub ──> 4. Tra chính sách từng đối tác ──> 5. Soạn      │
 │  phản hồi ──> 6. Gửi + ghi ticket                           │
 │                                                             │
 │ Bước tốn nhất/lỗi nhất? Bước 4 và 5 ( ~8 phút/lượt)       │
@@ -83,7 +83,7 @@
 │                                                             │
 │ Bài toán: Khiếu nại điểm không đúng được nhập dạng văn bản  │
 │ tự do, nhân viên phải đọc và gán thủ công cho đúng đội xử lý│
-│ Công ty thành viên: [x] Xanh SM  [x] VinFast  [x] Khác: VPoint│
+│ Công ty thành viên: [x] Xanh SM  [x] VinFast  [x] Khác: VinClub│
 │                                                             │
 │ Ai đang đau? Nhân viên back-office (đọc/gán thủ công),      │
 │ khách (chờ lâu vì ticket gán sai đội)                       │

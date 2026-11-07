@@ -27,7 +27,7 @@ Sơ đồ trực quan: xem `04-workflow-diagram.png`.
 
 | Field | Nội dung |
 |---|---|
-| **1. Actor / Operator** | Agent CSKH thuộc Trung tâm hỗ trợ khách hàng VPoint (Vingroup), xử lý yêu cầu liên quan điểm, hạng, ưu đãi của khách dùng dịch vụ VinFast, Vinmec, Vinpearl, Xanh SM, Vinschool. |
+| **1. Actor / Operator** | Agent CSKH thuộc Trung tâm hỗ trợ khách hàng VinClub (Vingroup), xử lý yêu cầu liên quan điểm, hạng, ưu đãi của khách dùng dịch vụ VinFast, Vinmec, Vinpearl, Xanh SM, Vinschool. |
 | **2. Current Workflow** | Agent nhận yêu cầu, xác minh khách, tra tài khoản VPoint, tra tay chính sách của từng công ty thành viên, tự soạn phản hồi, gửi và ghi ticket. 6 bước thủ công, ~14 phút/lượt *(GĐ)*. |
 | **3. Bottleneck** | Bước 4-5: chính sách rải rác theo từng công ty thành viên nên agent phải tra nhiều nguồn, rồi tự diễn giải thành lời dễ hiểu. Đây là bước vừa chậm vừa dễ sai (nói sai số điểm, sai điều kiện áp dụng). |
 | **4. Business Impact** | *(GĐ)* ~3.000 yêu cầu về điểm/hạng mỗi ngày toàn hệ thống × 8 phút ở bước 4-5 ≈ **400 giờ công/ngày**. Phản hồi sai dẫn đến khiếu nại lặp lại (re-contact) và giảm niềm tin vào chương trình, đồng thời khách bỏ lỡ ưu đãi nên giảm mức gắn kết giữa các công ty thành viên. |
@@ -42,7 +42,7 @@ Sơ đồ trực quan: xem `04-workflow-diagram.png`.
 
 | Tiêu chí | Rule / API | LLM Feature | Agentic Loop |
 |---|---|---|---|
-| Tính số dư, hạng, hạn điểm | **Chính xác tuyệt đối, bắt buộc dùng** | Có thể sai số | Không cần |
+| Tính số dư, hạng, | **Chính xác tuyệt đối, bắt buộc dùng** | Có thể sai số | Không cần |
 | Tra cứu đúng đoạn chính sách | Cứng nhắc, khó có thể phủ hết biến thể câu hỏi | Truy xuất và diễn giải ngôn ngữ tự nhiên | Quá mức |
 | Soạn phản hồi thân thiện, nhất quán giọng văn | Template cứng, nghe rất máy móc | **Điểm mạnh chính** | Quá mức |
 | Tự thực hiện đổi/chuyển điểm | **Rủi ro cao** (do các vấn đề về tài chính) | nếu có API, có kiểm soát | Không nên |
@@ -95,14 +95,12 @@ Lý do: số liệu điểm phải chính xác nên do API tính, LLM chỉ nh�
 
 ### Quyết định cuối cùng
 
-- [ ] GO (Bắt đầu xây dựng Prototype) — scope hẹp, có điều kiện
-- [ ] NOT YET
+- [ ] GO
+- [x] NOT YET
 - [ ] NO-GO
 
 **Justification:**
 
-> **GO với phạm vi hẹp**: chỉ làm *nháp trả lời cho agent nội bộ*, chỉ nhóm câu hỏi "số dư / hạng / hạn điểm / điều kiện dùng điểm" tại 1–2 công ty thành viên (đề xuất Xanh SM và Vinpearl) trước khi mở rộng.
->
 > **Bằng chứng ủng hộ:** (1) Bước nghẽn rõ (bước 4-5) và đo được; (2) kiến trúc hybrid tách "tính số liệu" (API) khỏi "diễn đạt" (LLM) nên loại bỏ rủi ro lớn nhất là sai số; (3) HITL + fallback giữ rủi ro trong tầm kiểm soát; (4) không có thao tác tài chính nào do AI thực hiện.
 >
 > **Điều kiện bắt buộc trước khi mở rộng (gates):** (a) xác minh các con số giả định bằng log ticket thật. Nếu thời gian bước 4-5 thực tế thấp hơn nhiều so với giả định thì giá trị giảm, cần đánh giá lại; (b) kiểm tra mẫu 200 nháp đạt 0 lỗi số liệu; (c) hoàn tất rà soát quyền riêng tư vì dữ liệu điểm và danh tính là dữ liệu cá nhân.
