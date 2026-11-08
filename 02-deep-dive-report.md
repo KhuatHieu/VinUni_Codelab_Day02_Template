@@ -95,11 +95,13 @@ Lý do: số liệu điểm phải chính xác nên do API tính, LLM chỉ nh�
 
 ### Quyết định cuối cùng
 
-- [ ] GO
-- [x] NOT YET
+- [x] GO **(Bắt đầu xây dựng Prototype) — scope hẹp, có điều kiện**
+- [ ] NOT YET
 - [ ] NO-GO
 
 **Justification:**
+
+> **GO với phạm vi hẹp**: chỉ làm nháp trả lời cho agent nội bộ, chỉ nhóm câu hỏi "số dư / hạng / điều kiện dùng điểm" tại 1–2 công ty thành viên (đề xuất Xanh SM và Vinpearl) trước khi mở rộng.
 
 > **Bằng chứng ủng hộ:** (1) Bước nghẽn rõ (bước 4-5) và đo được; (2) kiến trúc hybrid tách "tính số liệu" (API) khỏi "diễn đạt" (LLM) nên loại bỏ rủi ro lớn nhất là sai số; (3) HITL + fallback giữ rủi ro trong tầm kiểm soát; (4) không có thao tác tài chính nào do AI thực hiện.
 >
